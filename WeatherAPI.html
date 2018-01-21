@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //your jQuery code goes here
+			$("#getData").click(function(){
+				var urlAPI = "https://api.openweathermap.org/data/2.5/weather?zip=" + $("#zip").val() + "&APPID=9eca1fc442e70d8833be0deec637fec0";
+    
+    
+				$.getJSON(urlAPI, function(result){
+					$.each(result, function(i, field){
+						if(i == "coord"){
+						   $("#results").append(i + " -----    LON: " + field.lon +  "    LAT: " + field.lat + "<br/>");
+						}
+						else if ( i == "base"){
+						  $("#results").append(i + " -----    " + field +  "<br/>");
+						}
+						else if ( i == "main"){
+						  $("#results").append(i + "-----    TEMP: " + field.temp + "K    PRESSURE: " + field.pressure + "<br/>");
+						}
+						else if (i == "wind"){
+						  $("#results").append(i + " -----    SPEED: " + field.speed +"m/s" +  "<br/>");
+						}
+						else if(i == "clouds"){
+						  $("#results").append(i + " -----    CLOUDINESS:" + field.all + "<br/>");
+						}
+						else if(i == "sys"){
+						  $("#results").append(i + " -----    SUNRISE: " + field.sunrise + " UTC    SUNSET: " + field.sunset + "UTC" + "<br/>");
+						}
+						else if(i == "name"){
+						  $("#results").append(i + " -----    CITY:" + field+ "<br/>");
+						}
+						else{}
+					});  // end .each
+				
+				$("#results").append("<br/>");
+				
+				}); // end getJSON
+			});//end .click
+		});// end .ready(function)
+    </script>
+    
+    <style type="text/css">
+        /* your local CSS styles go here */
+    </style>
+</head>
+
+<body>
+<!-- your HTML code goes here -->
+<p>
+	<label>Enter zip code:</label>
+	<input type="text" id="zip" />
+	<input type="button" id="getData" value="Get Data" />'
+</p>
+
+	<div id="results"></div>
+</body>
+</html>
